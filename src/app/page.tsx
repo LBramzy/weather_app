@@ -2,7 +2,7 @@
 
 import type React from "react"
 
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import { Search, Cloud, Wind, Droplets, Eye } from "lucide-react"
 import WeatherCard from "../components/weather-card"
 import HourlyForecast from "../components/hourly-forecast"
@@ -11,7 +11,6 @@ import DailyForecast from "../components/daily-forecast"
 export default function Home() {
   const [location, setLocation] = useState("San Francisco, CA")
   const [searchInput, setSearchInput] = useState("")
-  const [weatherData, setWeatherData] = useState<WeatherData | null>(null)
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault()
@@ -19,14 +18,12 @@ export default function Home() {
       setLocation(searchInput)
         
       // Fetch data from API based on searchInput
-      //  const url = `https://www.themealdb.com/api/json/v1/1/search.php?s=${encodeURIComponent(searchInput)}`;
       const url = `https://api.weatherapi.com/v1/current.json?key=c7bfdd17ee2f452fa1084506251311&q=${encodeURIComponent(searchInput)}&aqi=yes`
       // Implement API call and state update here
       fetch(url)
         .then(response => response.json())
         .then(data => {
           console.log(data);
-          setWeatherData(data || [])
         })
         .catch(error => {
           console.error("Error fetching weather data:", error);
@@ -34,12 +31,6 @@ export default function Home() {
       setSearchInput("")
     }
   }
-
-  useEffect(() => {
-    if (weatherData) {
-      console.log("Updated weatherData state:", weatherData);
-    }
-  }, [weatherData]);
 
   // Mock data - replace with real API integration
   const currentWeather = {

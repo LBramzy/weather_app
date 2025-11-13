@@ -1,5 +1,5 @@
-import { useState } from 'react'
-import Home from './app/page'
+// import { useState } from 'react'
+import Home from './app/page.tsx'
 import "./app/global.css"
 
 
